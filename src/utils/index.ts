@@ -30,7 +30,7 @@ export function deepClone(object: any, recursion: boolean) {
   const { parse, stringify } = JSON
   if (!recursion)
     return parse(stringify(object))
-  const clonedObj: Record<string, any> = object instanceof Array ? [] : {}
+  const clonedObj: Record<string, any> = Array.isArray(object) ? [] : {}
 
   if (object && typeof object === 'object') {
     for (const key in object) {

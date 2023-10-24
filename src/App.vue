@@ -6,7 +6,6 @@
 
 <script lang="ts" setup>
 import datav from './components/datav/index.vue'
-
 </script>
 
 <style lang="less">

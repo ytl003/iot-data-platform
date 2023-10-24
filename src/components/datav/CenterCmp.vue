@@ -49,7 +49,6 @@
 </template>
 
 <script lang="ts" setup>
-
 const state = reactive({
   config: {
     data: [
@@ -107,7 +106,7 @@ const state = reactive({
     align-items: center;
 
     .card {
-      background-color: rgba(4,49,128,.6);
+      background-color: rgba(4, 49, 128, .6);
       color: #08e5ff;
       height: 70px;
       width: 70px;
@@ -133,7 +132,8 @@ const state = reactive({
       }
     }
 
-    .ccmc-left, .ccmc-right {
+    .ccmc-left,
+    .ccmc-right {
       width: 25%;
       display: flex;
       flex-direction: column;

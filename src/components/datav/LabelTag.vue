@@ -2,7 +2,8 @@
   <div class="label-tag">
     <template v-if="state.mergedConfig">
       <div v-for="(label, i) in state.mergedConfig.data" :key="label" class="label-item">
-        {{ label }} <div :style="`background-color: ${state.mergedConfig.colors[i % state.mergedConfig.colors.length]};`" />
+        {{ label }}
+        <div :style="`background-color: ${state.mergedConfig.colors[i % state.mergedConfig.colors.length]};`" />
       </div>
     </template>
   </div>
@@ -47,7 +48,7 @@ function mergeConfig() {
   state.mergedConfig = deepMerge(deepClone(state.defaultConfig, true), props.config || {})
 }
 
-onMounted (() => {
+onMounted(() => {
   mergeConfig()
 })
 </script>

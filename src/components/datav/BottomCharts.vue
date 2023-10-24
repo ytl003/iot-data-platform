@@ -40,7 +40,6 @@
 </template>
 
 <script lang="ts" setup>
-
 const state = reactive({
   config1: {
     data: [
@@ -177,7 +176,9 @@ const state = reactive({
     font-size: 18px !important;
   }
 
-  .decoration-1, .decoration-2, .decoration-3 {
+  .decoration-1,
+  .decoration-2,
+  .decoration-3 {
     display: absolute;
     left: 0%;
   }

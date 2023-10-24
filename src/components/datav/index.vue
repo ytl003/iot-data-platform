@@ -9,9 +9,7 @@
           机电设备电子档案
         </div>
         <div class="mh-right">
-          <dv-border-box-2
-            style="width: 120px; height: 50px; line-height: 50px; text-align:center;margin-left:200px;"
-          >
+          <dv-border-box-2 style="width: 120px; height: 50px; line-height: 50px; text-align:center;margin-left:200px;">
             综合管理台
           </dv-border-box-2>
         </div>
@@ -61,7 +59,6 @@
 // import RightChart2 from './RightChart2.vue'
 
 // import BottomCharts from './BottomCharts.vue'
-
 </script>
 
 <style lang="less">
@@ -87,10 +84,10 @@
 
     .mh-left {
       font-size: 20px;
-      color: rgb(1,134,187);
+      color: rgb(1, 134, 187);
 
       a:visited {
-        color: rgb(1,134,187);
+        color: rgb(1, 134, 187);
       }
     }
 
@@ -98,7 +95,8 @@
       font-size: 30px;
     }
 
-    .mh-left, .mh-right {
+    .mh-left,
+    .mh-right {
       width: 450px;
     }
   }
@@ -146,7 +144,8 @@
     height: 35%;
   }
 
-  .rmctc-chart-1, .rmctc-chart-2 {
+  .rmctc-chart-1,
+  .rmctc-chart-2 {
     height: 50%;
   }
 }

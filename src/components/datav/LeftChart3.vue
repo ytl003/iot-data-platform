@@ -11,7 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-
 const state = reactive({
   config: {
     data: [

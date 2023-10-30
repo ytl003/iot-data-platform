@@ -1,17 +1,9 @@
 <template>
   <div id="data-view">
     <dv-full-screen-container>
-      <div class="main-header">
-        <div class="mh-left">
-          技术支持:<a href="https://github.com/vaemusic/datav-vue3" target="_blank">https://github.com/vaemusic/datav-vue3</a>
-        </div>
+      <div class="main-header" flex="~ justify-center items-center">
         <div class="mh-middle">
-          机电设备电子档案
-        </div>
-        <div class="mh-right">
-          <dv-border-box-2 style="width: 120px; height: 50px; line-height: 50px; text-align:center;margin-left:200px;">
-            综合管理台
-          </dv-border-box-2>
+          物联网感知数据监测平台
         </div>
       </div>
 
@@ -48,18 +40,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-// import LeftChart1 from './LeftChart1.vue'
-// import LeftChart2 from './LeftChart2.vue'
-// import LeftChart3 from './LeftChart3.vue'
-
-// import CenterCmp from './CenterCmp.vue'
-
-// import RightChart1 from './RightChart1.vue'
-// import RightChart2 from './RightChart2.vue'
-
-// import BottomCharts from './BottomCharts.vue'
-</script>
+<script lang="ts" setup></script>
 
 <style lang="less">
 #data-view {
@@ -78,9 +59,6 @@
 
   .main-header {
     height: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
 
     .mh-left {
       font-size: 20px;

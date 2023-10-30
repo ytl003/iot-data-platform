@@ -2,7 +2,7 @@
   <div class="bottom-charts">
     <div class="bc-chart-item">
       <div class="bcci-header">
-        赵钱收费站
+        XXXX
       </div>
       <dv-active-ring-chart :config="state.config1" />
       <Label-Tag :config="state.labelConfig" />
@@ -11,7 +11,7 @@
 
     <div class="bc-chart-item">
       <div class="bcci-header">
-        孙李收费站
+        XXXX
       </div>
       <dv-active-ring-chart :config="state.config2" />
       <Label-Tag :config="state.labelConfig" />
@@ -21,7 +21,7 @@
 
     <div class="bc-chart-item">
       <div class="bcci-header">
-        周吴收费站
+        XXXX
       </div>
       <dv-active-ring-chart :config="state.config3" />
       <Label-Tag :config="state.labelConfig" />

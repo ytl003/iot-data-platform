@@ -1,7 +1,7 @@
 <template>
   <div class="left-chart-1">
     <div class="lc1-header">
-      张三收费站
+      XXXX
     </div>
     <div class="lc1-details">
       设备运行总数<span>430</span>

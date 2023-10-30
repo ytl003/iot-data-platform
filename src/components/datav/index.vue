@@ -40,7 +40,15 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { getAirData } from '~/service/air'
+
+onMounted(() => {
+  getAirData().then((r) => {
+    console.log(r)
+  })
+})
+</script>
 
 <style lang="less">
 #data-view {

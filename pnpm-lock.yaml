@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@jiaminghi/c-render':
+    specifier: ^0.4.3
+    version: 0.4.3
+  '@jiaminghi/charts':
+    specifier: ^0.2.18
+    version: 0.2.18
   '@kjgl77/datav-vue3':
     specifier: ^1.4.3
     version: 1.7.1(vue@3.3.7)

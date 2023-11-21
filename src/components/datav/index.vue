@@ -9,15 +9,16 @@
 
       <dv-border-box-1 class="main-container">
         <dv-border-box-3 class="left-chart-container">
+          <!-- 设备在线状态 -->
           <Left-Chart-1 />
-          <Left-Chart-2 />
+          <!-- <Left-Chart-2 /> -->
           <Left-Chart-3 />
         </dv-border-box-3>
 
         <div class="right-main-container">
           <div class="rmc-top-container">
             <dv-border-box-3 class="rmctc-left-container">
-              <Center-Cmp />
+              <!-- <Center-Cmp /> -->
             </dv-border-box-3>
 
             <div class="rmctc-right-container">
@@ -26,13 +27,13 @@
               </dv-border-box-3>
 
               <dv-border-box-4 class="rmctc-chart-2" :reverse="true">
-                <Right-Chart-2 />
+                <!-- <Right-Chart-2 /> -->
               </dv-border-box-4>
             </div>
           </div>
 
           <dv-border-box-4 class="rmc-bottom-container">
-            <Bottom-Charts />
+            <!-- <Bottom-Charts /> -->
           </dv-border-box-4>
         </div>
       </dv-border-box-1>
@@ -44,7 +45,7 @@
 import { getAirData } from '~/service/air'
 
 onMounted(() => {
-  getAirData().then((r) => {
+  getAirData({ filter: { $and: [{ createdAt: { $dateBetween: ['2023-10-01', '2023-10-31'] } }] } }).then((r) => {
     console.log(r)
   })
 })
@@ -78,7 +79,9 @@ onMounted(() => {
     }
 
     .mh-middle {
-      font-size: 30px;
+      margin-top: 20px;
+      font-size: 50px;
+      font-weight: bold;
     }
 
     .mh-left,
@@ -114,7 +117,7 @@ onMounted(() => {
   }
 
   .rmc-top-container {
-    height: 65%;
+    height: 70%;
     display: flex;
   }
 

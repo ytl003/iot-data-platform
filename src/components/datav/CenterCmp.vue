@@ -126,6 +126,7 @@ const state = reactive({
     .ccmc-middle {
       width: 50%;
       height: 90%;
+      // transform: scale(0.5);
 
       .active-ring-name {
         font-size: 20px !important;

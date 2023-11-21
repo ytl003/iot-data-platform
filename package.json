@@ -10,9 +10,12 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@jiaminghi/c-render": "^0.4.3",
+    "@jiaminghi/charts": "^0.2.18",
     "@kjgl77/datav-vue3": "^1.4.3",
     "@nocobase/sdk": "0.14.0-alpha.7",
     "@vueuse/core": "^10.0.2",
+    "echarts": "^5.4.3",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },

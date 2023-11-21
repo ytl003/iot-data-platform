@@ -1,50 +1,78 @@
 <template>
   <div class="right-chart-1">
-    <div class="rc1-header">
-      赵六收费站
-    </div>
-
-    <div class="rc1-chart-container">
-      <div class="left">
-        <div class="number">
-          262
-        </div>
-        <div>设备运行总数</div>
-      </div>
-
-      <dv-capsule-chart class="right" :config="state.config" />
-    </div>
+    <dv-charts  :option="option" style="width: 100%;height: 100%;" />
   </div>
 </template>
 
 <script lang="ts" setup>
-const state = reactive({
-  config: {
-    data: [
-      {
-        name: '收费系统',
-        value: 25,
-      },
-      {
-        name: '通信系统',
-        value: 66,
-      },
-      {
-        name: '监控系统',
-        value: 123,
-      },
-      {
-        name: '供配电系统',
-        value: 72,
-      },
-      {
-        name: '其他',
-        value: 99,
-      },
-    ],
-    unit: '件',
+const option1 = {
+  style: {
+    fill: '#fff',
   },
-})
+  title: {
+    text: '二氧化碳数据分析',
+    style: {
+      fill: '#fff',
+    },
+  },
+  xAxis: {
+    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+    axisLabel: {
+      style: {
+        fill: '#fff',
+      },
+    },
+    axisLine: {
+      style: {
+        stroke: '#fff',
+        lineWidth: 1,
+      },
+    },
+    axisTick: {
+      style: {
+        stroke: '#fff',
+        lineWidth: 1,
+      },
+    },
+  },
+  yAxis: {
+    name: 'CO2浓度',
+    nameTextStyle: {
+      fill: '#fff',
+      fontSize: 10,
+    },
+    data: 'value',
+    axisLabel: {
+      style: {
+        fill: '#fff',
+      },
+    },
+    axisLine: {
+      style: {
+        stroke: '#fff',
+        lineWidth: 1,
+      },
+    },
+    axisTick: {
+      style: {
+        stroke: '#fff',
+        lineWidth: 1,
+      },
+    },
+  },
+  series: [
+    {
+      data: [1200, 2230, 1900, 2100, 3500, 4200, 3985, 1200, 2230, 1900, 2100, 3500, 4200, 3985],
+      type: 'line',
+      lineArea: {
+        show: true,
+        gradient: ['rgba(55, 162, 218, 0.6)', 'rgba(55, 162, 218, 0)'],
+      },
+    },
+  ],
+}
+
+const option = reactive(option1)
 </script>
 
 <style lang="less">
@@ -55,10 +83,9 @@ const state = reactive({
   flex-direction: column;
 
   .rc1-header {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
-    height: 30px;
-    line-height: 30px;
+    line-height: 60px;
   }
 
   .rc1-chart-container {
@@ -66,27 +93,5 @@ const state = reactive({
     display: flex;
   }
 
-  .left {
-    width: 30%;
-    font-size: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .number {
-      font-size: 34px;
-      color: #096dd9;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
-  }
-
-  .right {
-    flex: 1;
-    padding-bottom: 20px;
-    padding-right: 20px;
-    box-sizing: border-box;
-  }
 }
 </style>

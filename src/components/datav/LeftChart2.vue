@@ -1,14 +1,16 @@
 <template>
-  <div class="left-chart-2">
-    <div class="lc2-header">
-      李四收费站
+  <dv-border-box10>
+    <div class="left-chart-2">
+      <div class="lc2-header">
+        李四收费站
+      </div>
+      <div class="lc2-details">
+        设备运行总数<span>245</span>
+      </div>
+      <dv-charts class="lc2-chart" :option="state.option" />
+      <dv-decoration-2 style="height: 10px" />
     </div>
-    <div class="lc2-details">
-      设备运行总数<span>245</span>
-    </div>
-    <dv-charts class="lc2-chart" :option="state.option" />
-    <dv-decoration-2 style="height:10px;" />
-  </div>
+  </dv-border-box10>
 </template>
 
 <script lang="ts" setup>

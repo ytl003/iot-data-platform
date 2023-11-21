@@ -1,82 +1,85 @@
 <template>
   <div class="left-chart-1">
     <div class="lc1-header">
-      XXXX
+      设备在线状态
     </div>
-    <div class="lc1-details">
-      设备运行总数<span>430</span>
+    <div flex="~ wrap" ml-10px>
+      <dv-border-box8 v-for="(item, key) in configs" :key="item.label" class="box mt-10px" :reverse="key % 2 === 0">
+        <dv-digital-flop :config="item.data" />
+        <div text="18px">
+          {{ item.label }}
+        </div>
+      </dv-border-box8>
     </div>
-    <dv-capsule-chart class="lc1-chart" :config="state.config" />
-    <dv-decoration-2 style="height:10px;" />
+    <dv-decoration-2 class="mt-20px" style="height: 10px;" />
   </div>
 </template>
 
 <script lang="ts" setup>
-const state = reactive({
-  config: {
-    data: [
-      {
-        name: '收费系统',
-        value: 167,
-      },
-      {
-        name: '通信系统',
-        value: 67,
-      },
-      {
-        name: '监控系统',
-        value: 123,
-      },
-      {
-        name: '供配电系统',
-        value: 55,
-      },
-      {
-        name: '其他',
-        value: 98,
-      },
-    ],
-    colors: ['#00baff', '#3de7c9', '#fff', '#ffc530', '#469f4b'],
-    unit: '件',
+const configs = reactive([
+  {
+    label: '采集设备数量',
+    data: {
+      number: [13],
+      content: '{nt}个',
+    },
   },
-})
+  {
+    label: '智能设备数量',
+    data: {
+      number: [13],
+      content: '{nt}个',
+    },
+  },
+  {
+    label: '远程设备数量',
+    data: {
+      number: [13],
+      content: '{nt}个',
+    },
+  },
+  {
+    label: '警报设备数量',
+    data: {
+      number: [13],
+      content: '{nt}个',
+    },
+  },
+  {
+    label: '警报设备数量',
+    data: {
+      number: [13],
+      content: '{nt}个',
+    },
+  },
+  {
+    label: '警报设备数量',
+    data: {
+      number: [13],
+      content: '{nt}个',
+    },
+  },
+])
 </script>
 
 <style lang="less">
 .left-chart-1 {
   width: 100%;
-  height: 37%;
   display: flex;
   flex-grow: 0;
   flex-direction: column;
 
   .lc1-header {
+    font-weight: bold;
     text-align: center;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
 
-  .lc1-details {
-    height: 50px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    text-indent: 20px;
-
-    span {
-      color: #096dd9;
-      font-weight: bold;
-      font-size: 35px;
-      margin-left: 20px;
-    }
-  }
-
-  .lc1-chart {
-    flex: 1;
+  .box {
+    width: 45%;
+    height: 140px;
+    margin-left: 2.5%;
   }
 }
 </style>

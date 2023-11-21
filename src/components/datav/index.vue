@@ -2,9 +2,7 @@
   <div id="data-view">
     <dv-full-screen-container>
       <div class="main-header" flex="~ justify-center items-center">
-        <div class="mh-middle">
-          物联网感知数据监测平台
-        </div>
+        <div class="mh-middle">物联网感知数据监测平台</div>
       </div>
 
       <dv-border-box-1 class="main-container">
@@ -17,8 +15,9 @@
 
         <div class="right-main-container">
           <div class="rmc-top-container">
-            <dv-border-box-3 class="rmctc-left-container">
+            <dv-border-box-3 class="rmctc-left-container p-20px">
               <!-- <Center-Cmp /> -->
+              <div class="img"></div>
             </dv-border-box-3>
 
             <div class="rmctc-right-container">
@@ -27,13 +26,15 @@
               </dv-border-box-3>
 
               <dv-border-box-4 class="rmctc-chart-2" :reverse="true">
-                <!-- <Right-Chart-2 /> -->
+                <Right-Chart-2 />
               </dv-border-box-4>
             </div>
           </div>
 
           <dv-border-box-4 class="rmc-bottom-container">
             <!-- <Bottom-Charts /> -->
+            <Bottom-Chart-1 />
+            <Bottom-Chart-2 />
           </dv-border-box-4>
         </div>
       </dv-border-box-1>
@@ -42,13 +43,17 @@
 </template>
 
 <script lang="ts" setup>
-import { getAirData } from '~/service/air'
+import { getAirData } from "~/service/air";
 
 onMounted(() => {
-  getAirData({ filter: { $and: [{ createdAt: { $dateBetween: ['2023-10-01', '2023-10-31'] } }] } }).then((r) => {
-    console.log(r)
-  })
-})
+  getAirData({
+    filter: {
+      $and: [{ createdAt: { $dateBetween: ["2023-10-01", "2023-10-31"] } }],
+    },
+  }).then((r) => {
+    console.log(r);
+  });
+});
 </script>
 
 <style lang="less">
@@ -59,7 +64,7 @@ onMounted(() => {
   color: #fff;
 
   #dv-full-screen-container {
-    background-image: url('./img/bg.png');
+    background-image: url("./img/bg.png");
     background-size: 100% 100%;
     box-shadow: 0 0 3px blue;
     display: flex;
@@ -101,7 +106,7 @@ onMounted(() => {
   }
 
   .left-chart-container {
-    width: 22%;
+    width: 26%;
     padding: 10px;
     box-sizing: border-box;
 
@@ -111,22 +116,28 @@ onMounted(() => {
   }
 
   .right-main-container {
-    width: 78%;
+    width: 74%;
     padding-left: 5px;
     box-sizing: border-box;
   }
 
   .rmc-top-container {
-    height: 70%;
+    height: 65%;
     display: flex;
   }
 
   .rmctc-left-container {
-    width: 65%;
+    width: 60%;
+    .img {
+      background-image: url("./img/3.png");
+      background-size: 100% 100%;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .rmctc-right-container {
-    width: 35%;
+    width: 40%;
   }
 
   .rmc-bottom-container {

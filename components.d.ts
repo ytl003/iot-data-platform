@@ -9,8 +9,12 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    2: typeof import('./src/components/datav/RightChart1 copy 2.vue')['default']
+    BottomChart1: typeof import('./src/components/datav/BottomChart1.vue')['default']
+    BottomChart2: typeof import('./src/components/datav/BottomChart2.vue')['default']
     BottomCharts: typeof import('./src/components/datav/BottomCharts.vue')['default']
     CenterCmp: typeof import('./src/components/datav/CenterCmp.vue')['default']
+    copy: typeof import('./src/components/datav/RightChart1 copy.vue')['default']
     Datav: typeof import('./src/components/datav/index.vue')['default']
     LabelTag: typeof import('./src/components/datav/LabelTag.vue')['default']
     LeftChart1: typeof import('./src/components/datav/LeftChart1.vue')['default']

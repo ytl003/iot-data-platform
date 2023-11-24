@@ -1,11 +1,7 @@
 <template>
   <div id="data-view">
     <dv-full-screen-container>
-      <div class="main-header" flex="~ justify-center items-center">
-        <div class="mh-middle">
-          物联网感知数据监测平台
-        </div>
-      </div>
+      <TopHeader1 @toggle="emit('toggle')" />
 
       <dv-border-box-1 class="main-container">
         <dv-border-box-3 class="left-chart-container">
@@ -47,6 +43,16 @@
 <script lang="ts" setup>
 import { getAirData } from '~/service/air'
 
+const emit = defineEmits(['toggle'])
+const nowTime = ref('')
+
+onMounted(() => {
+  nowTime.value = new Date().toLocaleString()
+  setInterval(() => {
+    nowTime.value = new Date().toLocaleString()
+  }, 1000)
+})
+
 onMounted(() => {
   getAirData({
     filter: {
@@ -75,25 +81,20 @@ onMounted(() => {
 
   .main-header {
     height: 80px;
-
     .mh-left {
+      position: absolute;
+      left: 30px;
       font-size: 20px;
-      color: rgb(1, 134, 187);
-
-      a:visited {
-        color: rgb(1, 134, 187);
-      }
+    }
+    .mh-right {
+      position: absolute;
+      right: 30px;
+      font-size: 20px;
     }
 
     .mh-middle {
-      margin-top: 20px;
       font-size: 50px;
       font-weight: bold;
-    }
-
-    .mh-left,
-    .mh-right {
-      width: 450px;
     }
   }
 
@@ -102,6 +103,7 @@ onMounted(() => {
 
     .border-box-content {
       padding: 20px;
+      padding-top: 0;
       box-sizing: border-box;
       display: flex;
     }

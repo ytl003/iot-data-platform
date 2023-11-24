@@ -2,7 +2,9 @@
   <div id="data-view">
     <dv-full-screen-container>
       <div class="main-header" flex="~ justify-center items-center">
-        <div class="mh-middle">物联网感知数据监测平台</div>
+        <div class="mh-middle">
+          物联网感知数据监测平台
+        </div>
       </div>
 
       <dv-border-box-1 class="main-container">
@@ -17,7 +19,7 @@
           <div class="rmc-top-container">
             <dv-border-box-3 class="rmctc-left-container p-20px">
               <!-- <Center-Cmp /> -->
-              <div class="img"></div>
+              <div class="img" />
             </dv-border-box-3>
 
             <div class="rmctc-right-container">
@@ -43,17 +45,17 @@
 </template>
 
 <script lang="ts" setup>
-import { getAirData } from "~/service/air";
+import { getAirData } from '~/service/air'
 
 onMounted(() => {
   getAirData({
     filter: {
-      $and: [{ createdAt: { $dateBetween: ["2023-10-01", "2023-10-31"] } }],
+      $and: [{ createdAt: { $dateBetween: ['2023-10-01', '2023-10-31'] } }],
     },
   }).then((r) => {
-    console.log(r);
-  });
-});
+    console.log(r)
+  })
+})
 </script>
 
 <style lang="less">

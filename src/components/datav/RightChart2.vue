@@ -1,10 +1,10 @@
 <template>
   <div class="right-chart-1">
     <div text="#fff 30px" class="mt-20px rc1-header">
-      近7天空气质量
+      近7日空气质量
     </div>
     <div
-      id="right-chart-2"
+      ref="chart"
       class="rc1-chart-container"
       :option="option"
       style="width: 100%; height: 100%"
@@ -14,10 +14,15 @@
 
 <script lang="ts" setup>
 import * as echarts from 'echarts'
+import { forEach } from 'lodash'
+import { getChatData } from '~/service/api'
 
 const option1 = {
   textStyle: {
     color: '#fff',
+  },
+  tooltip: {
+    trigger: 'axis',
   },
   grid: {
     left: '5%', // 左边留白
@@ -27,22 +32,7 @@ const option1 = {
     containLabel: true, // 确保图表在绘制时考虑坐标轴标签、刻度等内容
   },
   xAxis: {
-    data: [
-      '周一',
-      '周二',
-      '周三',
-      '周四',
-      '周五',
-      '周六',
-      '周日',
-      '周一',
-      '周二',
-      '周三',
-      '周四',
-      '周五',
-      '周六',
-      '周日',
-    ],
+    data: [],
     axisLabel: {
       show: true,
       lineStyle: {
@@ -66,7 +56,6 @@ const option1 = {
     },
   },
   yAxis: {
-    name: 'CO2浓度',
     nameTextStyle: {
       fill: '#fff',
       fontSize: 10,
@@ -88,26 +77,44 @@ const option1 = {
       },
     },
   },
-  series: [
-    {
-      data: [
-        1200, 2230, 1900, 2100, 3500, 4200, 3985, 1200, 2230, 1900, 2100, 3500,
-        4200, 3985,
-      ],
-      type: 'line',
-      lineArea: {
-        show: true,
-        gradient: ['rgba(55, 162, 218, 0.6)', 'rgba(55, 162, 218, 0)'],
-      },
+  legend: {
+    data: [] as string[],
+    textStyle: {
+      color: '#fff',
     },
-  ],
+  },
+  series: [] as any[],
+}
+
+const legendConfig = {
+  SO2: 'SO2',
+  aqi: '空气质量aqi',
 }
 
 const option = reactive(option1)
-
+const chart = ref<HTMLElement>()
 onMounted(() => {
-  const myChart = echarts.init(document.getElementById('right-chart-2'))
-  myChart.setOption(option1)
+  const params = { uid: '38lrpw4vdfv', collection: 'airData', measures: [{ field: ['aqi'], aggregation: 'avg', alias: 'aqi' }, { field: ['SO2'], aggregation: 'avg', alias: 'SO2' }, { field: ['level'], aggregation: 'avg', alias: 'level' }], dimensions: [{ field: ['date'], format: 'MM-DD', alias: 'date' }], filter: { $and: [{ date: { $dateBetween: ['2023-04-04 00:00:00', '2023-04-10 23:59:59'] } }] }, orders: [], cache: {} }
+  getChatData(params).then((r) => {
+    option.xAxis.data = r.data.data.map((item: any) => item.date)
+    const series: any[] = []
+    const legend: string[] = []
+
+    const validData = r.data.data
+    forEach(legendConfig, (name, key) => {
+      series.push({
+        name,
+        type: 'line',
+        stack: 'Total',
+        data: validData.map((item: any) => parseInt(item[key])),
+      })
+      legend.push(name)
+    })
+    option.series = series
+    option.legend.data = legend
+    const myChart = echarts.init(chart.value)
+    myChart.setOption(option)
+  })
 })
 </script>
 

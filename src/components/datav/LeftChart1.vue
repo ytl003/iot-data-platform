@@ -16,50 +16,65 @@
 </template>
 
 <script lang="ts" setup>
-const configs = reactive([
-  {
-    label: '采集设备数量',
-    data: {
-      number: [13],
-      content: '{nt}个',
+import type { StaticData } from '~/service/api'
+
+const props = defineProps<{
+  staticData: StaticData[]
+}>()
+const configs = computed(() => {
+  return [
+    {
+      label: '采集设备数量',
+      data: {
+        number: [0],
+        content: '{nt}个',
+      },
     },
-  },
-  {
-    label: '采集异常设备数量',
-    data: {
-      number: [13],
-      content: '{nt}个',
+    {
+      label: '采集异常设备数量',
+      data: {
+        number: [0],
+        content: '{nt}个',
+      },
     },
-  },
-  {
-    label: '智能设备数量',
-    data: {
-      number: [13],
-      content: '{nt}个',
+    {
+      label: '智能设备数量',
+      data: {
+        number: [0],
+        content: '{nt}个',
+      },
     },
-  },
-  {
-    label: '智能设备异常数量',
-    data: {
-      number: [13],
-      content: '{nt}个',
+    {
+      label: '智能设备异常数量',
+      data: {
+        number: [0],
+        content: '{nt}个',
+      },
     },
-  },
-  {
-    label: '远程设备数量',
-    data: {
-      number: [13],
-      content: '{nt}个',
+    {
+      label: '远程设备数量',
+      data: {
+        number: [0],
+        content: '{nt}个',
+      },
     },
-  },
-  {
-    label: '远程设备异常数量',
-    data: {
-      number: [13],
-      content: '{nt}个',
+    {
+      label: '远程设备异常数量',
+      data: {
+        number: [0],
+        content: '{nt}个',
+      },
     },
-  },
-])
+  ].map((i) => {
+    return {
+      ...i,
+      data: {
+        ...i.data,
+        number: [parseInt(props.staticData.find(k => k.key === i.label)?.content || '0')],
+      },
+    }
+  })
+})
 </script>
 
 <style lang="less">
@@ -78,7 +93,7 @@ const configs = reactive([
 
   .box {
     width: 45%;
-    height: 140px;
+    height: 130px;
     margin-left: 2.5%;
   }
 }

@@ -11,13 +11,17 @@
         w-100px
         h-100px
         style="border-radius: 50%; background-color: #67dd44"
+        :style="{
+          backgroundColor: data.levelColor,
+          color: data.levelColor === '#67dd44' ? '#fff' : '#000',
+        }"
       >
-        优
+        {{ data.level }}
       </div>
       <div ml-30px text="left">
-        <div>首要污染物：PM10</div>
-        <div>污染级别：2级</div>
-        <div>AQI指数：50</div>
+        <div>首要污染物：{{ data.shouyao }}</div>
+        <div>污染级别：{{ data.wuranjibie }}</div>
+        <div>AQI指数：{{ data.aqi }}</div>
       </div>
     </div>
     <div flex="~" mt-20px>
@@ -31,7 +35,7 @@
         />
         <div flex="~">
           <div flex-1 text-left>
-            {{ item.grade === 50 ? '0' : '' }}
+            {{ item.grade === 50 ? "0" : "" }}
           </div>
           <div text="right">
             {{ item.grade }}
@@ -40,14 +44,20 @@
       </div>
     </div>
     <div text="left 14px" mt-20px>
-      对健康的影响：空气质量可接受，但某些污染物可能对极少数异常敏感的人群健康有较轻影响。
+      对健康的影响：{{ data.yingxiang }}
       <br>
-      建议措施：极少数异常敏感人群应减少户外活动。
+      建议措施：{{ data.jianyi }}
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import type { StaticData } from '~/service/api'
+
+const props = defineProps<{
+  staticData: StaticData[]
+}>()
+
 const config = [
   {
     grade: 50,
@@ -80,6 +90,18 @@ const config = [
     color: '#6d1624',
   },
 ]
+const data = computed(() => {
+  const level = props.staticData.find(i => i.key === '空气质量等级')?.content || '优'
+  return {
+    level,
+    levelColor: config.find(i => i.text === level)?.color,
+    shouyao: props.staticData.find(i => i.key === '首要污染物')?.content || '',
+    wuranjibie: props.staticData.find(i => i.key === '污染级别')?.content || '',
+    aqi: props.staticData.find(i => i.key === 'AQI指数')?.content || '',
+    yingxiang: props.staticData.find(i => i.key === '对健康的影响')?.content || '',
+    jianyi: props.staticData.find(i => i.key === '建议措施')?.content || '',
+  }
+})
 </script>
 
 <style lang="less">

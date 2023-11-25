@@ -4,7 +4,7 @@
       土壤温湿度
     </div>
     <div
-      id="bottom-chart-1"
+      ref="chart"
       class="rc1-chart-container"
       :option="option"
       style="width: 100%; height: 100%"
@@ -14,10 +14,16 @@
 
 <script lang="ts" setup>
 import * as echarts from 'echarts'
+import { forEach } from 'lodash'
+import moment from 'moment'
+import { getChatData } from '~/service/api'
 
 const option1 = {
   textStyle: {
     color: '#fff',
+  },
+  tooltip: {
+    trigger: 'axis',
   },
   grid: {
     left: '5%', // 左边留白
@@ -27,22 +33,7 @@ const option1 = {
     containLabel: true, // 确保图表在绘制时考虑坐标轴标签、刻度等内容
   },
   xAxis: {
-    data: [
-      '周一',
-      '周二',
-      '周三',
-      '周四',
-      '周五',
-      '周六',
-      '周日',
-      '周一',
-      '周二',
-      '周三',
-      '周四',
-      '周五',
-      '周六',
-      '周日',
-    ],
+    data: [],
     axisLabel: {
       show: true,
       lineStyle: {
@@ -66,7 +57,6 @@ const option1 = {
     },
   },
   yAxis: {
-    name: 'CO2浓度',
     nameTextStyle: {
       fill: '#fff',
       fontSize: 10,
@@ -88,26 +78,45 @@ const option1 = {
       },
     },
   },
-  series: [
-    {
-      data: [
-        1200, 2230, 1900, 2100, 3500, 4200, 3985, 1200, 2230, 1900, 2100, 3500,
-        4200, 3985,
-      ],
-      type: 'line',
-      lineArea: {
-        show: true,
-        gradient: ['rgba(55, 162, 218, 0.6)', 'rgba(55, 162, 218, 0)'],
-      },
+  legend: {
+    data: [] as string[],
+    textStyle: {
+      color: '#fff',
     },
-  ],
+  },
+  series: [] as any[],
+}
+
+const legendConfig = {
+  temperature: '温度',
+  humidity: '湿度',
 }
 
 const option = reactive(option1)
-
+const chart = ref<HTMLElement>()
 onMounted(() => {
-  const myChart = echarts.init(document.getElementById('bottom-chart-1'))
-  myChart.setOption(option1)
+  const params = { uid: 'zkumrlalq2t', collection: 'soil', measures: [{ field: ['temperature'] }, { field: ['humidity'] }, { field: ['illumination'] }], dimensions: [{ field: ['date'], format: 'hh:mm', alias: 'date' }], filter: { $and: [{ date: { $dateBetween: ['2023-03-02 00:00:00', '2023-03-03 23:59:59'] } }] }, orders: [], cache: {} }
+  getChatData(params).then((r) => {
+    option.xAxis.data = r.data.data.map((item: any) => item.date)
+    const series: any[] = []
+    const legend: string[] = []
+    const currentTime = moment().format('HH:mm')
+    const currentMoment = moment(currentTime, 'HH:mm')
+    const validData = r.data.data.filter((item: any) => currentMoment.isBefore(moment(item.date, 'HH:mm')))
+    forEach(legendConfig, (name, key) => {
+      series.push({
+        name,
+        type: 'line',
+        stack: 'Total',
+        data: validData.map((item: any) => item[key]),
+      })
+      legend.push(name)
+    })
+    option.series = series
+    option.legend.data = legend
+    const myChart = echarts.init(chart.value)
+    myChart.setOption(option)
+  })
 })
 </script>
 

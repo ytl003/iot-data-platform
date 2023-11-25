@@ -6,9 +6,9 @@
       <dv-border-box-1 class="main-container">
         <dv-border-box-3 class="left-chart-container">
           <!-- 设备在线状态 -->
-          <Left-Chart-1 />
+          <Left-Chart-1 :static-data="staticData" />
           <!-- <Left-Chart-2 /> -->
-          <Left-Chart-3 />
+          <Left-Chart-3 :static-data="staticData" />
         </dv-border-box-3>
 
         <div class="right-main-container">
@@ -41,7 +41,8 @@
 </template>
 
 <script lang="ts" setup>
-import { getAirData } from '~/service/air'
+import type { StaticData } from '~/service/api'
+import { getDataContent } from '~/service/api'
 
 const nowTime = ref('')
 
@@ -51,14 +52,10 @@ onMounted(() => {
     nowTime.value = new Date().toLocaleString()
   }, 1000)
 })
-
+const staticData = ref<StaticData[]>([])
 onMounted(() => {
-  getAirData({
-    filter: {
-      $and: [{ createdAt: { $dateBetween: ['2023-10-01', '2023-10-31'] } }],
-    },
-  }).then((r) => {
-    console.log(r)
+  getDataContent({}).then((r) => {
+    staticData.value = r
   })
 })
 </script>

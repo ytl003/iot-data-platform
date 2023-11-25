@@ -11,3 +11,33 @@ api.axios.interceptors.request.use((config) => {
   }
   return config
 })
+
+export function getAirData(e: CommonParams) {
+  return api.resource('airData').list({
+    ...e,
+  }).then(r => r.data.data)
+}
+
+export function getSoilData(e: CommonParams) {
+  return api.resource('soil').list({
+    ...e,
+  }).then(r => r.data.data)
+}
+export interface StaticData {
+  key: string
+  content: string
+}
+export function getDataContent(e: CommonParams) {
+  return api.resource('dataContent').list({
+    pageSize: 1000,
+    ...e,
+  }).then(r => r.data.data as StaticData[])
+}
+
+export function getChatData(data: object) {
+  return api.request({
+    url: 'charts:query',
+    method: 'post',
+    data,
+  })
+}

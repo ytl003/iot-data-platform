@@ -13,9 +13,11 @@
       </dv-button>
     </div>
     <div class="absolute left-10 top-10">
-      <dv-button border="Border2" color="#2862b7" @click="emit('toggle')">
-        预警系统
-      </dv-button>
+      <RouterLink to="index2">
+        <dv-button border="Border2" color="#2862b7">
+          预警系统
+        </dv-button>
+      </RouterLink>
     </div>
   </div>
 </template>

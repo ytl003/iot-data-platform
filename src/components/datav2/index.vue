@@ -1,7 +1,7 @@
 <template>
   <div id="data-view">
     <dv-full-screen-container>
-      <top-header @toggle="emit('toggle')" />
+      <top-header />
 
       <div class="main-content">
         <digital-flop />
@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['toggle'])
 </script>
 
 <style lang="less">

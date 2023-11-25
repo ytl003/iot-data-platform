@@ -1,7 +1,7 @@
 <template>
   <div id="data-view">
     <dv-full-screen-container>
-      <TopHeader1 @toggle="emit('toggle')" />
+      <TopHeader1 />
 
       <dv-border-box-1 class="main-container">
         <dv-border-box-3 class="left-chart-container">
@@ -43,7 +43,6 @@
 <script lang="ts" setup>
 import { getAirData } from '~/service/air'
 
-const emit = defineEmits(['toggle'])
 const nowTime = ref('')
 
 onMounted(() => {

@@ -1,15 +1,9 @@
 <template>
-  <div id="app">
-    <datav v-if="page === '1'" @toggle="page = '2'" />
-    <datav2 v-if="page === '2'" @toggle="page = '1'" />
-  </div>
+  <router-view />
 </template>
 
 <script lang="ts" setup>
-import datav from './components/datav/index.vue'
-import datav2 from './components/datav2/index.vue'
 
-const page = ref('1')
 </script>
 
 <style lang="less">

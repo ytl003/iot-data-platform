@@ -25,7 +25,21 @@ const configs = reactive([
     },
   },
   {
+    label: '采集异常设备数量',
+    data: {
+      number: [13],
+      content: '{nt}个',
+    },
+  },
+  {
     label: '智能设备数量',
+    data: {
+      number: [13],
+      content: '{nt}个',
+    },
+  },
+  {
+    label: '智能设备异常数量',
     data: {
       number: [13],
       content: '{nt}个',
@@ -39,21 +53,7 @@ const configs = reactive([
     },
   },
   {
-    label: '警报设备数量',
-    data: {
-      number: [13],
-      content: '{nt}个',
-    },
-  },
-  {
-    label: '警报设备数量',
-    data: {
-      number: [13],
-      content: '{nt}个',
-    },
-  },
-  {
-    label: '警报设备数量',
+    label: '远程设备异常数量',
     data: {
       number: [13],
       content: '{nt}个',

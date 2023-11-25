@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  <datav />
+  <datav2 />
 </template>

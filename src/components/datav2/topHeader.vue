@@ -13,15 +13,16 @@
       </dv-button>
     </div>
     <div class="absolute left-10 top-10">
-      <dv-button border="Border2" color="#2862b7" @click="emit('toggle')">
-        监测系统
-      </dv-button>
+      <RouterLink to="/" class="flex">
+        <dv-button border="Border2" color="#1e76ef" class="">
+          监测系统
+        </dv-button>
+      </RouterLink>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['toggle'])
 const nowTime = ref('')
 onMounted(() => {
   nowTime.value = new Date().toLocaleString()

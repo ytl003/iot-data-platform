@@ -1,7 +1,7 @@
 <template>
   <div class="right-chart-1">
     <div text="#fff 30px" class="mt-20px rc1-header">
-      二氧化碳数据分析
+      今日空气质量
     </div>
     <div
       id="right-chart-1"

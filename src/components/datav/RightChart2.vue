@@ -1,7 +1,7 @@
 <template>
   <div class="right-chart-1">
     <div text="#fff 30px" class="mt-20px rc1-header">
-      空气实时温湿度
+      近7天空气质量
     </div>
     <div
       id="right-chart-2"

@@ -15,13 +15,18 @@ api.axios.interceptors.request.use((config) => {
 export function getAirData(e: CommonParams) {
   return api.resource('airData').list({
     ...e,
-  }).then(r => r.data.data)
+  }).then(r => r.data)
 }
 
 export function getSoilData(e: CommonParams) {
   return api.resource('soil').list({
     ...e,
-  }).then(r => r.data.data)
+  }).then(r => r.data)
+}
+export function getWarningData(e: CommonParams) {
+  return api.resource('warning').list({
+    ...e,
+  }).then(r => r.data)
 }
 export interface StaticData {
   key: string

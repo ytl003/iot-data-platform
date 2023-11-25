@@ -5,7 +5,7 @@
     </div>
 
     <div class="water-level-chart-details">
-      累计完成<span>235,680</span>条
+      累计完成<span>{{ done }}</span>条
     </div>
 
     <div class="chart-container">
@@ -15,11 +15,48 @@
 </template>
 
 <script setup lang="ts">
+import { getWarningData } from '~/service/api'
+
+const done = ref(0)
 const config = ref({
-  data: [45],
+  data: [0],
   shape: 'round',
   waveHeight: 25,
   waveNum: 2,
+})
+
+onMounted(() => {
+  Promise.all([
+    getWarningData({
+      filter: {
+        type: 'device',
+      },
+    }),
+    getWarningData({
+      filter: {
+        done: true,
+        type: 'device',
+      },
+    }),
+    getWarningData({
+      filter: {
+        type: 'msg',
+      },
+    }),
+    getWarningData({
+      filter: {
+        done: true,
+        type: 'msg',
+      },
+    }),
+  ]).then((r) => {
+    const all = r[0].meta.count + r[2].meta.count
+    done.value = r[1].meta.count + r[3].meta.count
+
+    config.value.data = [
+      parseInt(`${(done.value / all) * 100}`),
+    ]
+  })
 })
 </script>
 

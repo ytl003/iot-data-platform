@@ -24,134 +24,186 @@
 </template>
 
 <script setup lang="ts">
+import { map } from 'lodash'
 import { randomExtend } from '~/composables'
+import { getAirData, getDataContent, getSoilData, getWarningData } from '~/service/api'
 
-const digitalFlopData = ref<any[]>([])
+const digitalFlopData = ref<any[]>([
+  {
+    title: '设备总数',
+    number: {
+      number: [0],
+      content: '{nt}',
+      textAlign: 'right',
+      style: {
+        fill: '#4d99fc',
+        fontWeight: 'bold',
+      },
+    },
+    unit: '个',
+  },
+  {
+    title: '空气数据总数',
+    number: {
+      number: [0],
+      content: '{nt}',
+      textAlign: 'right',
+      style: {
+        fill: '#f46827',
+        fontWeight: 'bold',
+      },
+    },
+    unit: '个',
+  },
+  {
+    title: '土壤数据总数',
+    number: {
+      number: [0],
+      content: '{nt}',
+      textAlign: 'right',
+      style: {
+        fill: '#40faee',
+        fontWeight: 'bold',
+      },
+    },
+    unit: '个',
+  },
+  {
+    title: '设备总异常数',
+    number: {
+      number: [0],
+      content: '{nt}',
+      textAlign: 'right',
+      style: {
+        fill: '#4d99fc',
+        fontWeight: 'bold',
+      },
+    },
+    unit: '条',
+  },
+  {
+    title: '设备已处理数',
+    number: {
+      number: [0],
+      content: '{nt}',
+      textAlign: 'right',
+      style: {
+        fill: '#40faee',
+        fontWeight: 'bold',
+      },
+    },
+    unit: '条',
+  },
+  {
+    title: '设备未处理数',
+    number: {
+      number: [randomExtend(20, 30)],
+      content: '{nt}',
+      textAlign: 'right',
+      style: {
+        fill: '#f46827',
+        fontWeight: 'bold',
+      },
+    },
+    unit: '条',
+  },
+  {
+    title: '数据总异常数',
+    number: {
+      number: [0],
+      content: '{nt}',
+      textAlign: 'right',
+      style: {
+        fill: '#4d99fc',
+        fontWeight: 'bold',
+      },
+    },
+    unit: '条',
+  },
+  {
+    title: '数据已处理数',
+    number: {
+      number: [0],
+      content: '{nt}',
+      textAlign: 'right',
+      style: {
+        fill: '#40faee',
+        fontWeight: 'bold',
+      },
+    },
+    unit: '条',
+  },
+  {
+    title: '数据未处理数',
+    number: {
+      number: [0],
+      content: '{nt}',
+      textAlign: 'right',
+      style: {
+        fill: '#f46827',
+        fontWeight: 'bold',
+      },
+    },
+    unit: '条',
+  },
+])
 onMounted(() => {
   createData()
   setInterval(createData, 30000)
 })
-
 function createData() {
-  digitalFlopData.value = [
-    {
-      title: '设备总数',
-      number: {
-        number: [randomExtend(5, 10)],
-        content: '{nt}',
-        textAlign: 'right',
-        style: {
-          fill: '#4d99fc',
-          fontWeight: 'bold',
-        },
-      },
-      unit: '个',
+  getDataContent({
+    filter: {
+      'key.$in': ['采集设备数量', '智能设备数量', '远程设备数量'],
     },
-    {
-      title: '空气数据总数',
-      number: {
-        number: [randomExtend(5, 10)],
-        content: '{nt}',
-        textAlign: 'right',
-        style: {
-          fill: '#f46827',
-          fontWeight: 'bold',
-        },
-      },
-      unit: '个',
+  }).then((r) => {
+    const total = map(r, i => parseInt(i.content || '0')).reduce((a, b) => a + b)
+    digitalFlopData.value[0].number.number[0] = total
+  })
+
+  getAirData({}).then((r) => {
+    digitalFlopData.value[1].number.number[0] = r.meta.count
+  })
+
+  getSoilData({}).then((r) => {
+    digitalFlopData.value[2].number.number[0] = r.meta.count
+  })
+
+  getWarningData({
+    filter: {
+      type: 'msg',
     },
-    {
-      title: '土壤数据总数',
-      number: {
-        number: [randomExtend(5, 10)],
-        content: '{nt}',
-        textAlign: 'right',
-        style: {
-          fill: '#40faee',
-          fontWeight: 'bold',
-        },
+  }).then((r) => {
+    digitalFlopData.value[3].number.number[0] = r.meta.count
+    const all = r.meta.count
+    getWarningData({
+      filter: {
+        done: true,
+        type: 'msg',
       },
-      unit: '个',
+    }).then((r) => {
+      digitalFlopData.value[4].number.number[0] = r.meta.count
+      digitalFlopData.value[5].number.number[0] = all - r.meta.count
+    })
+  })
+
+  getWarningData({
+    filter: {
+      type: 'device',
     },
-    {
-      title: '设备总异常数',
-      number: {
-        number: [randomExtend(20000, 30000)],
-        content: '{nt}',
-        textAlign: 'right',
-        style: {
-          fill: '#4d99fc',
-          fontWeight: 'bold',
-        },
+  }).then((r) => {
+    digitalFlopData.value[6].number.number[0] = r.meta.count
+    const all = r.meta.count
+    getWarningData({
+      filter: {
+        done: true,
+        type: 'device',
       },
-      unit: '条',
-    },
-    {
-      title: '设备已处理数',
-      number: {
-        number: [randomExtend(20, 30)],
-        content: '{nt}',
-        textAlign: 'right',
-        style: {
-          fill: '#40faee',
-          fontWeight: 'bold',
-        },
-      },
-      unit: '条',
-    },
-    {
-      title: '设备未处理数',
-      number: {
-        number: [randomExtend(20, 30)],
-        content: '{nt}',
-        textAlign: 'right',
-        style: {
-          fill: '#f46827',
-          fontWeight: 'bold',
-        },
-      },
-      unit: '条',
-    },
-    {
-      title: '数据总异常数',
-      number: {
-        number: [randomExtend(20000, 30000)],
-        content: '{nt}',
-        textAlign: 'right',
-        style: {
-          fill: '#4d99fc',
-          fontWeight: 'bold',
-        },
-      },
-      unit: '条',
-    },
-    {
-      title: '数据已处理数',
-      number: {
-        number: [randomExtend(20, 30)],
-        content: '{nt}',
-        textAlign: 'right',
-        style: {
-          fill: '#40faee',
-          fontWeight: 'bold',
-        },
-      },
-      unit: '条',
-    },
-    {
-      title: '数据未处理数',
-      number: {
-        number: [randomExtend(20, 30)],
-        content: '{nt}',
-        textAlign: 'right',
-        style: {
-          fill: '#f46827',
-          fontWeight: 'bold',
-        },
-      },
-      unit: '条',
-    },
-  ]
+    }).then((r) => {
+      digitalFlopData.value[7].number.number[0] = r.meta.count
+      digitalFlopData.value[8].number.number[0] = all - r.meta.count
+    })
+  })
 }
 </script>
 

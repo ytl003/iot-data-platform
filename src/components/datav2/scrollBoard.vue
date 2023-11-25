@@ -8,23 +8,13 @@
 </template>
 
 <script setup lang="ts">
+import moment from 'moment'
+import { getWarningData } from '~/service/api'
+
 const config = ref({
   header: ['时间', '设备名称', '数量'],
   data: [
-    ['2019-07-01 19:25:00', '路面危害-松散', '5'],
-    ['2019-07-02 17:25:00', '路面危害-路面油污清理', '13'],
-    ['2019-07-03 16:25:00', '交安设施-交通标志牌结构', '6'],
-    ['2019-07-04 15:25:00', '路基危害-防尘网', '2'],
-    ['2019-07-05 14:25:00', '交安设施-交通标志牌结构', '1'],
-    ['2019-07-06 13:25:00', '路面危害-松散', '3'],
-    ['2019-07-07 12:25:00', '路基危害-防尘网', '4'],
-    ['2019-07-08 11:25:00', '路面危害-路面油污清理', '2'],
-    ['2019-07-09 10:25:00', '交安设施-交通标志牌结构', '5'],
-    ['2019-07-10 09:25:00', '路基危害-防尘网', '3'],
-    ['2019-07-07 12:25:00', '路基危害-防尘网', '4'],
-    ['2019-07-08 11:25:00', '路面危害-路面油污清理', '2'],
-    ['2019-07-09 10:25:00', '交安设施-交通标志牌结构', '5'],
-    ['2019-07-10 09:25:00', '路基危害-防尘网', '3'],
+
   ],
   index: true,
   columnWidth: [120, 240, 370],
@@ -35,6 +25,25 @@ const config = ref({
   oddRowBGC: 'rgba(0, 44, 81, 0.8)',
   evenRowBGC: 'rgba(10, 29, 50, 0.8)',
 })
+onMounted(() => {
+  getData()
+  setInterval(() => {
+    getData()
+  }, 5000)
+})
+
+function getData() {
+  getWarningData({
+    pageSize: 500,
+    filter: {
+      type: 'device',
+    },
+  }).then((r) => {
+    config.value.data = r.data.map((i: any) => {
+      return [i.content, moment(i.createTime).format('YYYY-MM-DD HH:mm:ss'), i.count || 1]
+    })
+  })
+}
 </script>
 
 <style lang="less">

@@ -4,7 +4,7 @@
       告警趋势图
     </div>
     <div
-      id="right-chart-1"
+      ref="chart"
       class="rc1-chart-container"
       :option="option"
       style="width: 100%; height: 100%"
@@ -14,10 +14,15 @@
 
 <script lang="ts" setup>
 import * as echarts from 'echarts'
+import { forEach } from 'lodash'
+import { getChatData } from '~/service/api'
 
 const option1 = {
   textStyle: {
     color: '#fff',
+  },
+  tooltip: {
+    trigger: 'axis',
   },
   grid: {
     left: '5%', // 左边留白
@@ -27,22 +32,7 @@ const option1 = {
     containLabel: true, // 确保图表在绘制时考虑坐标轴标签、刻度等内容
   },
   xAxis: {
-    data: [
-      '周一',
-      '周二',
-      '周三',
-      '周四',
-      '周五',
-      '周六',
-      '周日',
-      '周一',
-      '周二',
-      '周三',
-      '周四',
-      '周五',
-      '周六',
-      '周日',
-    ],
+    data: [],
     axisLabel: {
       show: true,
       lineStyle: {
@@ -66,7 +56,6 @@ const option1 = {
     },
   },
   yAxis: {
-    name: 'CO2浓度',
     nameTextStyle: {
       fill: '#fff',
       fontSize: 10,
@@ -88,26 +77,42 @@ const option1 = {
       },
     },
   },
-  series: [
-    {
-      data: [
-        1200, 2230, 1900, 2100, 3500, 4200, 3985, 1200, 2230, 1900, 2100, 3500,
-        4200, 3985,
-      ],
-      type: 'line',
-      lineArea: {
-        show: true,
-        gradient: ['rgba(55, 162, 218, 0.6)', 'rgba(55, 162, 218, 0)'],
-      },
+  legend: {
+    data: [] as string[],
+    textStyle: {
+      color: '#fff',
     },
-  ],
+  },
+  series: [] as any[],
 }
 
 const option = reactive(option1)
+const chart = ref<HTMLElement>()
 
 onMounted(() => {
-  const myChart = echarts.init(document.getElementById('right-chart-1'))
-  myChart.setOption(option1)
+  const params = { uid: 'ztxpmmf1kij', collection: 'warning', measures: [{ field: ['id'], aggregation: 'count', alias: 'id' }], dimensions: [{ field: ['createdAt'], format: 'MM-DD', alias: 'createdAt' }], filter: { $and: [{ createdAt: { $dateBetween: ['2023-10-31', '2023-12-31'] } }, { type: { $eq: 'device' } }] }, orders: [], cache: {} }
+  const params2 = { uid: 'ztxpmmf1kij', collection: 'warning', measures: [{ field: ['id'], aggregation: 'count', alias: 'id' }], dimensions: [{ field: ['createdAt'], format: 'MM-DD', alias: 'createdAt' }], filter: { $and: [{ createdAt: { $dateBetween: ['2023-10-31', '2023-12-31'] } }, { type: { $eq: 'msg' } }] }, orders: [], cache: {} }
+  Promise.all([
+    getChatData(params),
+    getChatData(params2),
+  ]).then((res) => {
+    option.xAxis.data = res[0].data.data.map((item: any) => item.createdAt)
+    const series: any[] = []
+    forEach(['预警', '设备告警'], (name, key) => {
+      const validData = res[key].data.data
+      series.push({
+        name,
+        type: 'line',
+        stack: 'Total',
+        data: validData.map((item: any) => parseInt(item.id)),
+      })
+    })
+
+    option.series = series
+    option.legend.data = ['预警', '设备告警']
+    const myChart = echarts.init(chart.value)
+    myChart.setOption(option)
+  })
 })
 </script>
 

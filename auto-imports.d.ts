@@ -40,10 +40,13 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
-  const getAirData: typeof import('./src/service/air')['getAirData']
+  const getAirData: typeof import('./src/service/api')['getAirData']
+  const getChatData: typeof import('./src/service/api')['getChatData']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
-  const getSoilData: typeof import('./src/service/soil')['getSoilData']
+  const getDataContent: typeof import('./src/service/api')['getDataContent']
+  const getSoilData: typeof import('./src/service/api')['getSoilData']
+  const getWarningData: typeof import('./src/service/api')['getWarningData']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
@@ -295,6 +298,8 @@ declare global {
 declare global {
   // @ts-ignore
   export type { Component, ComponentPublicInstance, ComputedRef, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, VNode, WritableComputedRef } from 'vue'
+  // @ts-ignore
+  export type { StaticData } from './src/service/api'
   // @ts-ignore
   export type { RowBase, FileMimeType, File, User, FiledEnum, UiSchema, Filed, Collection, Role, Region, PageMeta, CommonParams } from './src/types/nocobase'
 }
